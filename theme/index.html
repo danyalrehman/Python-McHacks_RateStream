@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="assets/ico/favicon.png">
+
+
+    <title>Rate It</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="assets/css/main.css" rel="stylesheet">
+	<link rel="stylesheet" href="assets/css/font-awesome.min.css">
+
+    <script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/modernizr.custom.js"></script>	
+
+	
+    <link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=EB+Garamond' rel='stylesheet' type='text/css'>
+
+    <!-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false&callback=initialize"> -->
+	</script>
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="assets/js/html5shiv.js"></script>
+      <script src="assets/js/respond.min.js"></script>
+    <![endif]-->
+
+  </head>
+
+  <body data-spy="scroll" data-offset="0" data-target="#theMenu">
+		
+	<!-- Menu -->
+	<nav class="menu" id="theMenu">
+		<div class="menu-wrap">
+			<h1 class="logo"><a href="index.html#home">Minimal</a></h1>
+			<i class="icon-remove menu-close"></i>
+			<a href="#home" class="smoothScroll">Home</a>
+			<a href="#about" class="smoothScroll">About</a>
+			<a href="#portfolio" class="smoothScroll">Portfolio</a>
+			<a href="#contact" class="smoothScroll">Contact</a>
+			<a href="#"><i class="icon-facebook"></i></a>
+			<a href="#"><i class="icon-twitter"></i></a>
+			<a href="#"><i class="icon-dribbble"></i></a>
+			<a href="#"><i class="icon-envelope"></i></a>
+		</div>
+		
+		<!-- Menu button -->
+		<div id="menuToggle"><i class="icon-reorder"></i></div>
+	</nav>
+
+
+	
+	<!-- ========== HEADER SECTION ========== -->
+	<section id="home" name="home"></section>
+	<div id="headerwrap">
+		<div class="container">
+			<!-- <div class="logo">
+				<img src="assets/img/logo.png">
+			</div> -->
+			<br>
+			<div class="row">
+				<h1>Rate It</h1>
+				<br>
+				<br>
+				<br>
+				<div class="col-lg-6 col-lg-offset-3">
+				</div> 
+
+				<input id="pac-input" class="controls" type="text" placeholder="Enter a location">
+    			<div id="map"></div>
+    			<div id="infowindow-content">
+      				<span id="place-name"  class="title"></span><br>
+      				<!--Place ID <span id="place-id"></span><br>  -->
+
+      				<b>Address:</b> <span id="place-address"></span><br>
+      				<b>Rating:</b> <span id="place-rating"></span>
+    			</div>
+
+    			<script>
+    				function initMap() {
+				        var map = new google.maps.Map(document.getElementById('map'), {
+				          center: {lat: -33.8688, lng: 151.2195},
+				          zoom: 13
+				        });
+
+        				var input = document.getElementById('pac-input');
+
+				        var autocomplete = new google.maps.places.Autocomplete(input);
+				        autocomplete.bindTo('bounds', map);
+
+				        map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+				        var infowindow = new google.maps.InfoWindow();
+				        var infowindowContent = document.getElementById('infowindow-content');
+				        infowindow.setContent(infowindowContent);
+				        var marker = new google.maps.Marker({
+				          map: map
+				        });
+				        marker.addListener('click', function() {
+				          infowindow.open(map, marker);
+				        });
+
+				        autocomplete.addListener('place_changed', function() {
+				          infowindow.close();
+				          var place = autocomplete.getPlace();
+				          if (!place.geometry) {
+				            return;
+				          }
+
+				          if (place.geometry.viewport) {
+				            map.fitBounds(place.geometry.viewport);
+				          } else {
+				            map.setCenter(place.geometry.location);
+				            map.setZoom(17);
+				          }
+
+				          // Set the position of the marker using the place ID and location.
+				          marker.setPlace({
+				            placeId: place.place_id,
+				            location: place.geometry.location
+				          });
+				          marker.setVisible(true);
+
+				          infowindowContent.children['place-name'].textContent = place.name;
+				          //infowindowContent.children['place-id'].textContent = place.place_id;
+				          infowindowContent.children['place-address'].textContent =
+				              place.formatted_address;
+				          infowindowContent.children['place-rating'].textContent = place.rating;
+				          infowindowContent.children['place-location'].textContent = place.location;
+				          infowindow.open(map, marker);
+				        });
+						
+						var service = new google.maps.places.PlacesService(map);
+  						service.textSearch(request, callback);
+
+  						document.getElementById('submit').addEventListener('click', function() {
+    						placeDetailsByPlaceId(service, map, infowindow);
+  						});
+
+				      }
+
+					google.maps.event.addDomListener(window, 'load', initMap);
+
+				</script>
+				
+    			<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAMY4Sa-ePmJmQN_N5EAOEpYLET1OhGpsA&libraries=places&callback=initMap"
+        			async defer></script>				
+	</div><!-- /headerwrap -->
+	
+	
+	
+	<!-- ========== ABOUT SECTION ========== -->
+	 <section id="about" name="about"></section>
+	<div id="f">
+		<div class="container">
+			<div class="row">
+				<h3>Tweets</h3>
+				<p class="centered"><i class="icon icon-circle"></i><i class="icon icon-circle"></i><i class="icon icon-circle"></i></p>
+				
+				 <!--INTRO INFORMATIO-->
+				 								
+			</div>
+		</div>
+	</div> 
+	
+
+	<!-- ========== CAROUSEL SECTION ========== -->	
+	<!-- <section id="portfolio" name="portfolio"></section>
+	<div id="f">
+		<div class="container">
+			<div class="row centered">
+				<h3>SOME PROJECTS</h3>
+				<p class="centered"><i class="icon icon-circle"></i><i class="icon icon-circle"></i><i class="icon icon-circle"></i></p>
+				
+				<div class="col-lg-6 col-lg-offset-3">
+					<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+						
+						<div class="carousel-inner">
+							<div class="item active centered">
+								<img class="img-responsive" src="assets/img/c1.png" alt="">
+							</div>
+							<div class="item centered">
+								<img class="img-responsive" src="assets/img/c2.png" alt="">
+							</div>
+							<div class="item centered">
+								<img class="img-responsive" src="assets/img/c3.png" alt="">
+							</div>
+						</div>
+						<br>
+						<br>
+						<ol class="carousel-indicators">
+						    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+						    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+						    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+						</ol>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>	
+    
+	 ========== CONTACT SECTION ========== 
+	<section id="contact" name="contact"></section>
+	<div id="f">
+		<div class="container">
+			<div class="row">
+				<h3>CONTACT ME</h3>
+				<p class="centered"><i class="icon icon-circle"></i><i class="icon icon-circle"></i><i class="icon icon-circle"></i></p>
+				
+				<div class="col-lg-6 col-lg-offset-3">
+					<p>Some Avenue, 987<br/>Madrid, Spain<br/>+34 8984-4343</p>
+					<p>iam@awesomemail.com</p>
+					<p><button type="button" class="btn btn-warning">YEAH! CONTACT ME NOW!</button></p>
+				</div>
+			</div>
+		</div>
+	</div> -->
+
+	
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+	<script src="assets/js/classie.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/smoothscroll.js"></script>
+	<script src="assets/js/main.js"></script>
+</body>
+</html>
